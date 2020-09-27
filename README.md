@@ -7,7 +7,7 @@ Fetching Server Data with React .
 Install dependencies
 
 ```sh
-  npm install
+  yarn install
 ```
 
 Run dev server - http://localhost:3000
