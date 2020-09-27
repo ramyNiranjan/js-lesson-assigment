@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from "react-router-dom";
+
+
+import CreateUser from './pages/CreateUser'
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import {GlobalStyles} from "./globalStyle/GlobalStyle";
+import ToastConfig from "./utils/toast/ToastConfig"
+import CustomerDetailPage from './pages/CustomerDetailPage';
+import UpdateCustomer from './pages/UpdateCustomer';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GlobalStyles />
+      <Switch>
+        <Route exact path="/" component={CreateUser} />
+        <Route path="/login" component={Login} />
+        <Route path="/home" component={Home} />
+        <Route path="/update-customer/:id" component={UpdateCustomer} />
+        <Route path="/customer/:id" component={CustomerDetailPage} />
+      </Switch>
+     <ToastConfig/>
     </div>
   );
 }
