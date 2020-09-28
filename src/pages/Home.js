@@ -30,6 +30,7 @@ function Home() {
      showCustomers();
    }, [createdId]);
 
+
   
 
 
@@ -48,7 +49,7 @@ function Home() {
   };
   
   
-
+console.log(userInfo)
   return (
     <HomeStyle>
       <h2>Welcome to customer list</h2>

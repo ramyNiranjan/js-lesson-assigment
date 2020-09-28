@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useHistory} from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { yupResolver } from '@hookform/resolvers';
+
 
 
 
@@ -14,12 +16,15 @@ import {
   UserFormContainerStyle,
 } from "../components/CreatUserComponent";
 import { CreateUserStyle } from "./CreateUser";
+import { loginValidation } from '../utils/validationSchema/loginValidation';
 
 
 
 function Login() {
   
-  const { register, handleSubmit, errors, setError } = useForm();
+  const { register, handleSubmit, errors, setError } = useForm({
+    resolver: yupResolver(loginValidation),
+  });
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const uid = params.get("uid");
@@ -39,9 +44,10 @@ const onSubmit = (data,e) => {
       userKit.setToken(res.data.token);
       history.push("/home");
     }).catch(err=>{
+      // const errMsg = err?.response?.data?.nonFieldErrors;
       setError("server", {
         type: "credential",
-        message: err.response.data.nonFieldErrors[0],
+        message: err && err,
       });
     });
   e.target.reset();
@@ -67,12 +73,14 @@ const onSubmit = (data,e) => {
               name="email"
               register={register}
             />
+            <ErrorStyle>{errors.email?.message}</ErrorStyle>
             <InputAtom
               placeholder="password"
               type="password"
               name="password"
               register={register}
             />
+            <ErrorStyle>{errors.password?.message}</ErrorStyle>
             {errors.server?.message && (
               <ErrorStyle>
                 Unable to log in with the credentials provided.
